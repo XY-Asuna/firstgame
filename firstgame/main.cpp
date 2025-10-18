@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+ï»¿#include <SFML/Graphics.hpp>
 #include <stdlib.h>
 #include <time.h>
 #include <windows.h>
@@ -22,18 +22,18 @@ sf::Time frametime = sf::microseconds(1000),frametime_rend=sf::microseconds(1666
 sf::Clock frameclock,frameclock_rend,bomb_time;
 sf::RectangleShape boundary({ 780.f,580.f });
 /*// sf::Font font;
-// sf::Text text(font);//  ÐèÒªÄÜÑÓ³Ù³õÊ¼»¯µÄ¡£¡£
-//Õâ¸ö²»ÊÇ ÑÓ³ÙµÄ Âð£¿ÏÈÒýÓÃfont ºóÃæÔÙfontµ¼Èë×ÖÌå ÎÒÖ®Ç°Ò»Ö±ÕâÃ´Ð´¶¼Ã»ÎÊÌâ
-//ËäÈ»ÊÇÕâÑù µ«ÊÇÆäÊµ¿ÉÄÜÓÐÎÊÌâ ²»ÊÇºÃÏ°¹ß 
-// ÉõÖÁÒÔÇ°ÕâÐ©È«¾Ö±äÁ¿³õÊ¼»¯Ë³Ðò¶¼Ã»Ö¸¶¨¡£¡£¡£
-//ohno ËûµÄtextÀ¨ºÅÀïÃæ±ØÐëÓÐ¶«Î÷ ÎÒÃ»°ì·¨²ÅÒýÓÃfontµÄ*/
+// sf::Text text(font);//  éœ€è¦èƒ½å»¶è¿Ÿåˆå§‹åŒ–çš„ã€‚ã€‚
+//è¿™ä¸ªä¸æ˜¯ å»¶è¿Ÿçš„ å—ï¼Ÿå…ˆå¼•ç”¨font åŽé¢å†fontå¯¼å…¥å­—ä½“ æˆ‘ä¹‹å‰ä¸€ç›´è¿™ä¹ˆå†™éƒ½æ²¡é—®é¢˜
+//è™½ç„¶æ˜¯è¿™æ · ä½†æ˜¯å…¶å®žå¯èƒ½æœ‰é—®é¢˜ ä¸æ˜¯å¥½ä¹ æƒ¯ 
+// ç”šè‡³ä»¥å‰è¿™äº›å…¨å±€å˜é‡åˆå§‹åŒ–é¡ºåºéƒ½æ²¡æŒ‡å®šã€‚ã€‚ã€‚
+//ohno ä»–çš„textæ‹¬å·é‡Œé¢å¿…é¡»æœ‰ä¸œè¥¿ æˆ‘æ²¡åŠžæ³•æ‰å¼•ç”¨fontçš„*/
 std::unique_ptr<sf::Font> font{};
 std::unique_ptr<sf::Text> text{}, text_grade{}, start_text{}, end_text{};
-/*// Éµ±Ævs ¼ÓÔØ²»³öÀ´¾ÍÖ±½Ó²¹È«ÂÒÆß°ËÔãµÄ¶«Î÷
+/*// å‚»é€¼vs åŠ è½½ä¸å‡ºæ¥å°±ç›´æŽ¥è¡¥å…¨ä¹±ä¸ƒå…«ç³Ÿçš„ä¸œè¥¿
 
-//fkingº¯ÊýÃ»µ÷ÓÃ¹ý Ã»×ÖÌåÓÃ
-//ptrÊÇÊ²Ã´À´µÄ pointer
-//ÄãÒª²»ÊÔÊÔ¿´ÄÜ²»ÄÜÓÃ*/
+//fkingå‡½æ•°æ²¡è°ƒç”¨è¿‡ æ²¡å­—ä½“ç”¨
+//ptræ˜¯ä»€ä¹ˆæ¥çš„ pointer
+//ä½ è¦ä¸è¯•è¯•çœ‹èƒ½ä¸èƒ½ç”¨*/
 void drawing_ing()
 {
     window.draw(boundary);
@@ -86,59 +86,59 @@ void renderingThread(sf::RenderWindow* window)
         window->display();
     }
 }/*
-// ¸øÄã¿´¿´ unique pointerÔõÃ´ÊµÏÖ
-// µÈ»á¸øÄã½²½â
-//ohnoÕâÊÇÊ²Ã´ Õâ¸öÕæÊÇ¿´ÌìÊéÁË
+// ç»™ä½ çœ‹çœ‹ unique pointeræ€Žä¹ˆå®žçŽ°
+// ç­‰ä¼šç»™ä½ è®²è§£
+//ohnoè¿™æ˜¯ä»€ä¹ˆ è¿™ä¸ªçœŸæ˜¯çœ‹å¤©ä¹¦äº†
 
-// Õâ¸öÊÇÄ£°å
-// Ò²¾ÍÊÇËµ Õâ¸ö¶«Î÷ÓÐ²ÎÊý Õâ¸ö²ÎÊýÊÇÀàÐÍ±¾Éí
-// ¾ÍÏñÄãÓÃvector Íù¼âÀ¨ºÅÀïÐ´µÄ¾ÍÊÇÄ£°åÀàÐÍ²ÎÊý eg vector<int> a;
-// È»ºóÄã¾Í·¢ÏÖvectorÉñÆæµØÊÊÓ¦ÁËËùÓÐÀàÐÍ ¼È¿ÉÒÔvector<int> Ò²¿ÉÒÔvector<char> È·Êµ
-// ËùÒÔÄ£°å¾ÍÊÇÕâ¸ö×÷ÓÃ
+// è¿™ä¸ªæ˜¯æ¨¡æ¿
+// ä¹Ÿå°±æ˜¯è¯´ è¿™ä¸ªä¸œè¥¿æœ‰å‚æ•° è¿™ä¸ªå‚æ•°æ˜¯ç±»åž‹æœ¬èº«
+// å°±åƒä½ ç”¨vector å¾€å°–æ‹¬å·é‡Œå†™çš„å°±æ˜¯æ¨¡æ¿ç±»åž‹å‚æ•° eg vector<int> a;
+// ç„¶åŽä½ å°±å‘çŽ°vectorç¥žå¥‡åœ°é€‚åº”äº†æ‰€æœ‰ç±»åž‹ æ—¢å¯ä»¥vector<int> ä¹Ÿå¯ä»¥vector<char> ç¡®å®ž
+// æ‰€ä»¥æ¨¡æ¿å°±æ˜¯è¿™ä¸ªä½œç”¨
 // my_unique_ptr<int> => T = int
 template<typename T>
 struct my_unique_ptr {
-    my_unique_ptr() = default; // Ä¬ÈÏ¹¹Ôì ²»¹ÜËü ºÃµÄ
-    T* storage{};               // ·´ÕýÎÒÖÃ¿ÕÁË //´ó¸ÅÊÇÃ»ÓÃµÄ³õÊ¼»¯ ²»¹ÜËû
+    my_unique_ptr() = default; // é»˜è®¤æž„é€  ä¸ç®¡å®ƒ å¥½çš„
+    T* storage{};               // åæ­£æˆ‘ç½®ç©ºäº† //å¤§æ¦‚æ˜¯æ²¡ç”¨çš„åˆå§‹åŒ– ä¸ç®¡ä»–
 
-    template<typename... Args> // Õâ¸öÈý¸öµãÊÇ¿É±ä²ÎÊý°ü£¬±íÊ¾Ò»¶ÑÀàÐÍ //·ÅÈëÒ»Ð©int char Ö®ÀàµÄ ·´ÕýÊÇÒ»¶Ñ
-    my_unique_ptr(Args&&... args) { // È»ºóÕâ¸ö¹¹Ôìº¯Êý½ÓÊÜ¿É±äµÄ²ÎÊý ...½Ð×öÕ¹¿ªÔËËã·û ÕâÁ½¸öÒýÓÃ·ûºÅÊÇÒòÎªÓÐÒýÓÃÕÛµþ È»ºóÕâ¸ö½ÐÍòÄÜÒýÓÃ
-        // ÒýÓÃÕÛµþÒ²¾ÍÊÇËµ T && && = T && T & && = T & 
-        // ÓÃÍòÄÜÒýÓÃ¿ÉÒÔÍÆµ¼³ö°üÀ¨ÒýÓÃµÄÀàÐÍ Èç¹û²»ÓÃÍòÄÜÒýÓÃ¾ÍÊÇÍÆµ¼³ö²»´øÒýÓÃµÄÀàÐÍÁËÒ»°ã
-        // ±ÈÈç int & ¾Í½Ð°üÀ¨ÒýÓÃµÄÀàÐÍ int ¾ÍÊÇÃ»ÓÐÒýÓÃµÄ //Õâ¸öÎÒ´ó¸ÅÖªµÀ
-        storage = new T(std::forward<Args>(args)...);// ... ÊÇÕ¹¿ªÇ°ÃæÕâ¸ö±í´ïÊ½
-        // ·´ÕýÎÒÃÇ´ïµ½ÁËÄ¿µÄ £¨£©  ÓÃ new T(...) ¾ÍÊÇ·ÖÅä²¢¹¹ÔìÒ»¸ö T ·µ»ØÒ»¸ö T* ÕýÈ·ÎÞ±È
+    template<typename... Args> // è¿™ä¸ªä¸‰ä¸ªç‚¹æ˜¯å¯å˜å‚æ•°åŒ…ï¼Œè¡¨ç¤ºä¸€å †ç±»åž‹ //æ”¾å…¥ä¸€äº›int char ä¹‹ç±»çš„ åæ­£æ˜¯ä¸€å †
+    my_unique_ptr(Args&&... args) { // ç„¶åŽè¿™ä¸ªæž„é€ å‡½æ•°æŽ¥å—å¯å˜çš„å‚æ•° ...å«åšå±•å¼€è¿ç®—ç¬¦ è¿™ä¸¤ä¸ªå¼•ç”¨ç¬¦å·æ˜¯å› ä¸ºæœ‰å¼•ç”¨æŠ˜å  ç„¶åŽè¿™ä¸ªå«ä¸‡èƒ½å¼•ç”¨
+        // å¼•ç”¨æŠ˜å ä¹Ÿå°±æ˜¯è¯´ T && && = T && T & && = T & 
+        // ç”¨ä¸‡èƒ½å¼•ç”¨å¯ä»¥æŽ¨å¯¼å‡ºåŒ…æ‹¬å¼•ç”¨çš„ç±»åž‹ å¦‚æžœä¸ç”¨ä¸‡èƒ½å¼•ç”¨å°±æ˜¯æŽ¨å¯¼å‡ºä¸å¸¦å¼•ç”¨çš„ç±»åž‹äº†ä¸€èˆ¬
+        // æ¯”å¦‚ int & å°±å«åŒ…æ‹¬å¼•ç”¨çš„ç±»åž‹ int å°±æ˜¯æ²¡æœ‰å¼•ç”¨çš„ //è¿™ä¸ªæˆ‘å¤§æ¦‚çŸ¥é“
+        storage = new T(std::forward<Args>(args)...);// ... æ˜¯å±•å¼€å‰é¢è¿™ä¸ªè¡¨è¾¾å¼
+        // åæ­£æˆ‘ä»¬è¾¾åˆ°äº†ç›®çš„ ï¼ˆï¼‰  ç”¨ new T(...) å°±æ˜¯åˆ†é…å¹¶æž„é€ ä¸€ä¸ª T è¿”å›žä¸€ä¸ª T* æ­£ç¡®æ— æ¯”
     }
 
-    // Â©ÁËÐÇºÅÔËËã·û
+    // æ¼äº†æ˜Ÿå·è¿ç®—ç¬¦
     T &operator*() const noexcept {
         return *storage;
     }
-    // »¹Â©ÁË¼ýÍ·
+    // è¿˜æ¼äº†ç®­å¤´
     T *operator->() const noexcept {
         return storage;
-    } // sb vs ºÃÏñÃ»´í
+    } // sb vs å¥½åƒæ²¡é”™
 
-    // ±ÈÈç´«Èë(9, std::string(), str), str ÊÇÒ»¸ö std::string ±äÁ¿
-    // ÄÇÃ´ Args »áÍÆµ¼³É (int(ºÃ°ÉÎÒÍü¼ÇÕâÖÖÊý×Ö×ÖÃæÁ¿ÊÇÊ²Ã´ ´ó¸ÅÂÊÊÇint//ÊÇint°É Ð¡¸ÅÂÊ int &&), std::string &&, std::string &)
+    // æ¯”å¦‚ä¼ å…¥(9, std::string(), str), str æ˜¯ä¸€ä¸ª std::string å˜é‡
+    // é‚£ä¹ˆ Args ä¼šæŽ¨å¯¼æˆ (int(å¥½å§æˆ‘å¿˜è®°è¿™ç§æ•°å­—å­—é¢é‡æ˜¯ä»€ä¹ˆ å¤§æ¦‚çŽ‡æ˜¯int//æ˜¯intå§ å°æ¦‚çŽ‡ int &&), std::string &&, std::string &)
     // 
-    // template<typename T> func(T t) {...}  func(int) => T = int ¼ÙÈç²»ÄÜ×Ô¶¯ÍÆµ¼ ¾ÍÒªÊÖ¶¯Ð´ ±ÈÈçmake_unique<T> »¹ÓÐÏÂÃæµÄfuck<T>(...)
-    // my_unique_ptr(int, float) => Args = [int, float] ±ÈÈçÕâ¸ö
-    // Õâ¸öÊÇÄ£°åº¯Êý
-    // ÓÐ¸öÀý×ÓÊÇ sort
-    // ÄãÔÙÒ»´ÎÉñÆæµØ·¢ÏÖsortÄÜÓÃÔÚºÜ¶à¶«Î÷ÉÏ
-    // sort(Êý×é),vector,Ê²Ã´Ê²Ã´µÄ 
-    // Ëü»á×Ô¶¯ÍÆµ¼
-    // ÄÇÒ²ÊÇÓÃÁËÄ£°å ²»ÓÃÐ´¼âÀ¨ºÅÊÇÒòÎªÍ¨¹ý²ÎÊý×Ô¶¯ÍÆµ¼³öÄ£°åÀàÐÍ²ÎÊýÁË //ÄÄ¸öÊÇÓÃÓÚ×Ô¶¯ÍÆµ¼µÄ
+    // template<typename T> func(T t) {...}  func(int) => T = int å‡å¦‚ä¸èƒ½è‡ªåŠ¨æŽ¨å¯¼ å°±è¦æ‰‹åŠ¨å†™ æ¯”å¦‚make_unique<T> è¿˜æœ‰ä¸‹é¢çš„fuck<T>(...)
+    // my_unique_ptr(int, float) => Args = [int, float] æ¯”å¦‚è¿™ä¸ª
+    // è¿™ä¸ªæ˜¯æ¨¡æ¿å‡½æ•°
+    // æœ‰ä¸ªä¾‹å­æ˜¯ sort
+    // ä½ å†ä¸€æ¬¡ç¥žå¥‡åœ°å‘çŽ°sortèƒ½ç”¨åœ¨å¾ˆå¤šä¸œè¥¿ä¸Š
+    // sort(æ•°ç»„),vector,ä»€ä¹ˆä»€ä¹ˆçš„ 
+    // å®ƒä¼šè‡ªåŠ¨æŽ¨å¯¼
+    // é‚£ä¹Ÿæ˜¯ç”¨äº†æ¨¡æ¿ ä¸ç”¨å†™å°–æ‹¬å·æ˜¯å› ä¸ºé€šè¿‡å‚æ•°è‡ªåŠ¨æŽ¨å¯¼å‡ºæ¨¡æ¿ç±»åž‹å‚æ•°äº† //å“ªä¸ªæ˜¯ç”¨äºŽè‡ªåŠ¨æŽ¨å¯¼çš„
 
     my_unique_ptr(const my_unique_ptr &) = delete;
     my_unique_ptr& operator=(const my_unique_ptr&) = delete;
-    // µÚÒ»¸ö½Ð¸´ÖÆ¹¹Ôìº¯Êý ÏÔÈ» unique ptr ²»ÄÜ¸´ÖÆ ÒòÎªËü±í´ïÁËËùÓÐÈ¨
-    // c++ ¸ãÕâÐ©Ö÷Òª¾ÍÊÇÈÃÄã¸üºÃ¹ÜÀíÄãµÄ¶ÔÏó
-    // rust µÄËùÓÐÈ¨ÏÔÈ»¸üÑÏ¸ñ c++ ¾ÍÒªÄã×Ô¼ºÊÖ¶¯¸ãÕâÐ©ÁË
-    // ÏÂÃæÄÇ¸öÊÇÔËËã·ûÖØÔØ ¸´ÖÆ¹¹Ôì¸³ÖµÔËËã·û ËùÒÔ°ÑÕâÁ½¸ö¶¼ delete ÁË ²»ÔÊÐíÕâ¸ö²Ù×÷
-    // µ±Äã³¢ÊÔ¸´ÖÆunique_ptr ¾Í»á±¨´í ¿´ÏÂÃæ
-    //ÕâÊÇ°ÑÃ»ÓÃµÄdelete
+    // ç¬¬ä¸€ä¸ªå«å¤åˆ¶æž„é€ å‡½æ•° æ˜¾ç„¶ unique ptr ä¸èƒ½å¤åˆ¶ å› ä¸ºå®ƒè¡¨è¾¾äº†æ‰€æœ‰æƒ
+    // c++ æžè¿™äº›ä¸»è¦å°±æ˜¯è®©ä½ æ›´å¥½ç®¡ç†ä½ çš„å¯¹è±¡
+    // rust çš„æ‰€æœ‰æƒæ˜¾ç„¶æ›´ä¸¥æ ¼ c++ å°±è¦ä½ è‡ªå·±æ‰‹åŠ¨æžè¿™äº›äº†
+    // ä¸‹é¢é‚£ä¸ªæ˜¯è¿ç®—ç¬¦é‡è½½ å¤åˆ¶æž„é€ èµ‹å€¼è¿ç®—ç¬¦ æ‰€ä»¥æŠŠè¿™ä¸¤ä¸ªéƒ½ delete äº† ä¸å…è®¸è¿™ä¸ªæ“ä½œ
+    // å½“ä½ å°è¯•å¤åˆ¶unique_ptr å°±ä¼šæŠ¥é”™ çœ‹ä¸‹é¢
+    //è¿™æ˜¯æŠŠæ²¡ç”¨çš„delete
     
     my_unique_ptr(my_unique_ptr &&other) noexcept : storage(other.storage) {
         other.storage = nullptr;
@@ -148,73 +148,73 @@ struct my_unique_ptr {
 		other.storage = nullptr;
         return *this;
 	}
-    // ²»ÄÜ¸´ÖÆ ÄÇÔõÃ´´«µÝ unique_ptr ÄØ
-    // c++ ÓÐ¸ö½ÐÒÆ¶¯µÄ¶«Î÷£¬ËäÈ»rustÒ²ÓÐ µ«ÊÇÕâÁ½¸ö²»Ò»Ñù
-    // rust Àï±»ÒÆ¶¯µÄ¶ÔÏó¾ÍÊÇÒÑ¾­±»´Ý»ÙµÄ×´Ì¬ // ÒÆ¶¯ºó´Ý»ÙÔ­À´µÄ?//¶Ô Äã¿ÉÒÔÏëÏóËü¾ÍÊÇÕû¸öÅ²ÎÑÁË Ô­À´
-    // c++ ÒÆ¶¯Ö®ºó Ô­À´Õâ¸ö¶ÔÏó²¢Ã»ÓÐ¡°ÏûÊ§¡±»òÕß´Ý»Ù ËüËµ²»¶¨»¹ÄÜÓÃ ÉõÖÁÒ»¶¨Òª´¦ÓÚ¿ÉÒÔ°²È«Îö¹¹µÄ×´Ì¬
-    // ÉÏÃæÁ½¸ö¾ÍÊÇÒÆ¶¯¹¹Ôìº¯Êý ºÍ¶ÔÓ¦µÄ¸³Öµ·ûºÅ //°Ñ¸³Öµ£¨=£©µÄ×÷ÓÃÉÔ×÷¸Ä±ä
-    // ²ÎÊýÊÇÓÒÖµ²Å»áµ÷ÓÃÕâ¸öÒÆ¶¯ ¿´ÏÂÃæ
-    // ¿ÉÒÔ¿´µ½¾ÍÊÇ°ÑÕâ¸öÖ¸Õë×ªÒÆµ½ÐÂµÄ unique_ptr ÀïÃæ ¾ÉµÄÒªÖÃ¿Õ ÈÃËü´¦ÓÚ¿É°²È«Îö¹¹µÄ×´Ì¬
+    // ä¸èƒ½å¤åˆ¶ é‚£æ€Žä¹ˆä¼ é€’ unique_ptr å‘¢
+    // c++ æœ‰ä¸ªå«ç§»åŠ¨çš„ä¸œè¥¿ï¼Œè™½ç„¶rustä¹Ÿæœ‰ ä½†æ˜¯è¿™ä¸¤ä¸ªä¸ä¸€æ ·
+    // rust é‡Œè¢«ç§»åŠ¨çš„å¯¹è±¡å°±æ˜¯å·²ç»è¢«æ‘§æ¯çš„çŠ¶æ€ // ç§»åŠ¨åŽæ‘§æ¯åŽŸæ¥çš„?//å¯¹ ä½ å¯ä»¥æƒ³è±¡å®ƒå°±æ˜¯æ•´ä¸ªæŒªçªäº† åŽŸæ¥
+    // c++ ç§»åŠ¨ä¹‹åŽ åŽŸæ¥è¿™ä¸ªå¯¹è±¡å¹¶æ²¡æœ‰â€œæ¶ˆå¤±â€æˆ–è€…æ‘§æ¯ å®ƒè¯´ä¸å®šè¿˜èƒ½ç”¨ ç”šè‡³ä¸€å®šè¦å¤„äºŽå¯ä»¥å®‰å…¨æžæž„çš„çŠ¶æ€
+    // ä¸Šé¢ä¸¤ä¸ªå°±æ˜¯ç§»åŠ¨æž„é€ å‡½æ•° å’Œå¯¹åº”çš„èµ‹å€¼ç¬¦å· //æŠŠèµ‹å€¼ï¼ˆ=ï¼‰çš„ä½œç”¨ç¨ä½œæ”¹å˜
+    // å‚æ•°æ˜¯å³å€¼æ‰ä¼šè°ƒç”¨è¿™ä¸ªç§»åŠ¨ çœ‹ä¸‹é¢
+    // å¯ä»¥çœ‹åˆ°å°±æ˜¯æŠŠè¿™ä¸ªæŒ‡é’ˆè½¬ç§»åˆ°æ–°çš„ unique_ptr é‡Œé¢ æ—§çš„è¦ç½®ç©º è®©å®ƒå¤„äºŽå¯å®‰å…¨æžæž„çš„çŠ¶æ€
     
-    //Îö¹¹ == ´Ý»Ù£¿
-    // ÄãËµÊÇÒ²ÐÐ
-    // Õâ¸ö¾ÍÊÇÎö¹¹ ¾ÍÊÇËü×ß³öÊôÓÚËüµÄ scope Ö®ºó£¬±àÒëÆ÷»áµ÷ÓÃÕâ¸ö //okok
-    // ÏÔÈ»ÕâÑù¾ÍÄÜºÜ·½±ãÊµÏÖÒ»Ð©ÇåÀíÂß¼­
-    // ÄÇÎÒÃÇ unique_ptr ÏÔÈ»¾ÍÊÇÒªÊÍ·ÅÕâ¸öÍæÒâ ËùÒÔÖ±½Ó delete delete ¿ÕÖ¸ÕëÃ»ÊÂ ËùÒÔ²»¹ÜËû
-    // Õâ¸ö½Ð RAII resource acquisition is initialization, ¹¹ÔìµÄÊ±ºòÍê³É³õÊ¼»¯ È»ºó×Ô¶¯³ö scope Îö¹¹ ÊÍ·ÅÀïÃæµÄ×ÊÔ´
-    // µ±È»Ò²ÓÐÆäËûÓÃ·¨ ±ÈÈçÓÐ¸östd::lock_guard ´«ÈëÒ»¸ömutex×ö¹¹Ôì²ÎÊý ¹¹ÔìµÄÊ±ºòÉÏËø Îö¹¹µÄÊ±ºò½âËø
+    //æžæž„ == æ‘§æ¯ï¼Ÿ
+    // ä½ è¯´æ˜¯ä¹Ÿè¡Œ
+    // è¿™ä¸ªå°±æ˜¯æžæž„ å°±æ˜¯å®ƒèµ°å‡ºå±žäºŽå®ƒçš„ scope ä¹‹åŽï¼Œç¼–è¯‘å™¨ä¼šè°ƒç”¨è¿™ä¸ª //okok
+    // æ˜¾ç„¶è¿™æ ·å°±èƒ½å¾ˆæ–¹ä¾¿å®žçŽ°ä¸€äº›æ¸…ç†é€»è¾‘
+    // é‚£æˆ‘ä»¬ unique_ptr æ˜¾ç„¶å°±æ˜¯è¦é‡Šæ”¾è¿™ä¸ªçŽ©æ„ æ‰€ä»¥ç›´æŽ¥ delete delete ç©ºæŒ‡é’ˆæ²¡äº‹ æ‰€ä»¥ä¸ç®¡ä»–
+    // è¿™ä¸ªå« RAII resource acquisition is initialization, æž„é€ çš„æ—¶å€™å®Œæˆåˆå§‹åŒ– ç„¶åŽè‡ªåŠ¨å‡º scope æžæž„ é‡Šæ”¾é‡Œé¢çš„èµ„æº
+    // å½“ç„¶ä¹Ÿæœ‰å…¶ä»–ç”¨æ³• æ¯”å¦‚æœ‰ä¸ªstd::lock_guard ä¼ å…¥ä¸€ä¸ªmutexåšæž„é€ å‚æ•° æž„é€ çš„æ—¶å€™ä¸Šé” æžæž„çš„æ—¶å€™è§£é”
     ~my_unique_ptr() {
         delete storage;
     }
-    //Ò²¾ÍÊÇ unique_ptr ¿ÉÒÔ×Ô¶¯ÍÆµ¼²ÎÊý ÓÃÍê»á×Ô¶¯ÊÍ·Å
+    //ä¹Ÿå°±æ˜¯ unique_ptr å¯ä»¥è‡ªåŠ¨æŽ¨å¯¼å‚æ•° ç”¨å®Œä¼šè‡ªåŠ¨é‡Šæ”¾
 };
 
 template<typename T, typename... Args>
-auto fuck(Args&&... args) { // ÕâÁ½¸öÊÇÎªÁËÄÜÈÃArgsÍÆµ¼³ö´øÒýÓÃµÄÀàÐÍ
-    return T(std::forward<Args>(args)...);//Õâ¸öforwardÊÇÊ²Ã´À´µÄ 
-    // È»ºóÕâ¸öForwardÊ¹ÓÃ´ÏÃ÷µÄÖØÔØ °Ñ args °´Ô­À´µÄÀàÐÍ£¨Args£©·µ»Ø//ºÜ´ÏÃ÷
-    //Ò²¾ÍÊÇËµ ÎÒ¸øfuckÒ»¸ö²ÎÊý ¾Í»á·µ»Ø T(Õâ¸ö²ÎÊý)
+auto fuck(Args&&... args) { // è¿™ä¸¤ä¸ªæ˜¯ä¸ºäº†èƒ½è®©ArgsæŽ¨å¯¼å‡ºå¸¦å¼•ç”¨çš„ç±»åž‹
+    return T(std::forward<Args>(args)...);//è¿™ä¸ªforwardæ˜¯ä»€ä¹ˆæ¥çš„ 
+    // ç„¶åŽè¿™ä¸ªForwardä½¿ç”¨èªæ˜Žçš„é‡è½½ æŠŠ args æŒ‰åŽŸæ¥çš„ç±»åž‹ï¼ˆArgsï¼‰è¿”å›ž//å¾ˆèªæ˜Ž
+    //ä¹Ÿå°±æ˜¯è¯´ æˆ‘ç»™fuckä¸€ä¸ªå‚æ•° å°±ä¼šè¿”å›ž T(è¿™ä¸ªå‚æ•°)
 }
-// Ö÷ÒªºÍÖµÀàÐÍÓÐ¹ØÏµ ·´Õý±È½Ïâ«Ëö Ò»°ã×ª·¢²ÎÊý¶¼»áÓÃÕâ¸ö ±£Ö¤Äãfuck<T>(...) T(...), ½ÓÊÜµÄÖµÊÇÒ»ÑùµÄ Ô­À´ÊÇ×óÖµ¾ÍÊÇ´«µÝ×óÖµ Ô­À´ÊÇÓÒÖµ¾Í´«µÝÓÒÖµ µ÷ÓÃµ½ÕýÈ·µÄº¯Êý
+// ä¸»è¦å’Œå€¼ç±»åž‹æœ‰å…³ç³» åæ­£æ¯”è¾ƒçŒ¥ç ä¸€èˆ¬è½¬å‘å‚æ•°éƒ½ä¼šç”¨è¿™ä¸ª ä¿è¯ä½ fuck<T>(...) T(...), æŽ¥å—çš„å€¼æ˜¯ä¸€æ ·çš„ åŽŸæ¥æ˜¯å·¦å€¼å°±æ˜¯ä¼ é€’å·¦å€¼ åŽŸæ¥æ˜¯å³å€¼å°±ä¼ é€’å³å€¼ è°ƒç”¨åˆ°æ­£ç¡®çš„å‡½æ•°
 //okok
 // 
-// arguments ¾ÍÊÇ²ÎÊý
+// arguments å°±æ˜¯å‚æ•°
 //arg is what
 */
 void setup_ur_fking_text() {
-   /* //²»ºÃÊÇÖ¸Õë²»»áÓÃ¡£
-    // Ì«¹ýÖÇÄÜle std::unique_ptr
-    //²»ÓÃÖ¸ÕëÔõÃ´¹ÜÀí
-    //Ã»ÊÂÊÇÖÇÄÜÖ¸Õë
-    //ËûÕâ¸öÖÇÄÜµÄÒâË¼ÊÇ Ëû»áÔÚºÏÊÊµÄÊ±ºòÊÍ·ÅµôÀïÃæµÄ¶«Î÷ ËùÒÔ²»ÓÃÊÖ¶¯delete
-    // sf::Font(const std::filesystem::path &path)//¹Ì¶¨µÄ²ÎÊý ¿´À´²»»á×Ô¶¯×ª»» again
-    // È·Êµ make_unique<T>(args) ¾ÍÊÇ×ª·¢²ÎÊýµ½ T(args)
-    //ÀàËÆÓÚ sf::Font font("dsaasdasd.otf");*/
-    font = std::make_unique<sf::Font>(std::filesystem::path("SourceHanSerifCN-Medium.otf"));//ÕâÀïÊÇ¹¹ÔìÁËÒ»¸öFontÀàÐÍµÄ¶«¶« 
-    //ËüÕâÀïÔõÃ´ÖªµÀµ÷ÓÃµÄÊÇfont.setFontfile
-    //sf::Font f = fuck<sf::Font>(std::filesystem::path("SourceHanSerifCN-Medium.otf")); // ·Ç³£ÍêÃÀ ¾ÍÕâ¸öÔ­Àí
+   /* //ä¸å¥½æ˜¯æŒ‡é’ˆä¸ä¼šç”¨ã€‚
+    // å¤ªè¿‡æ™ºèƒ½le std::unique_ptr
+    //ä¸ç”¨æŒ‡é’ˆæ€Žä¹ˆç®¡ç†
+    //æ²¡äº‹æ˜¯æ™ºèƒ½æŒ‡é’ˆ
+    //ä»–è¿™ä¸ªæ™ºèƒ½çš„æ„æ€æ˜¯ ä»–ä¼šåœ¨åˆé€‚çš„æ—¶å€™é‡Šæ”¾æŽ‰é‡Œé¢çš„ä¸œè¥¿ æ‰€ä»¥ä¸ç”¨æ‰‹åŠ¨delete
+    // sf::Font(const std::filesystem::path &path)//å›ºå®šçš„å‚æ•° çœ‹æ¥ä¸ä¼šè‡ªåŠ¨è½¬æ¢ again
+    // ç¡®å®ž make_unique<T>(args) å°±æ˜¯è½¬å‘å‚æ•°åˆ° T(args)
+    //ç±»ä¼¼äºŽ sf::Font font("dsaasdasd.otf");*/
+    font = std::make_unique<sf::Font>(std::filesystem::path("SourceHanSerifCN-Medium.otf"));//è¿™é‡Œæ˜¯æž„é€ äº†ä¸€ä¸ªFontç±»åž‹çš„ä¸œä¸œ 
+    //å®ƒè¿™é‡Œæ€Žä¹ˆçŸ¥é“è°ƒç”¨çš„æ˜¯font.setFontfile
+    //sf::Font f = fuck<sf::Font>(std::filesystem::path("SourceHanSerifCN-Medium.otf")); // éžå¸¸å®Œç¾Ž å°±è¿™ä¸ªåŽŸç†
     text = std::make_unique<sf::Text>(*font);
     
-    /*//auto test1 = std::move(text); // std::move °Ñ²ÎÊýµÄÀàÐÍ×ª»»ÎªÓÒÖµÒýÓÃ·µ»Ø
-    //auto test2(std::move(test1)); // Õâ¸ö¾Íµ÷ÓÃÁËÒÆ¶¯¹¹Ôìº¯Êý
-    // ÓÚÊÇÕâÀï¾Íµ÷ÓÃÁËÒÆ¶¯¹¹Ôì¸´ÖÆÔËËã·û //´ÏÃ÷°¡£¡ Ìý¶®ÒÑ¾­ ÄÇ¾ÍÊÇ±È½ÏÃ÷ÁËµÄ
-    // ³ýÁË move µÄ×÷ÓÃ±È½ÏÎ¢Ãî »¹ÓÐÒÆ¶¯¹¹Ôì²»»á´Ý»ÙÔ­¶ÔÏó »ù±¾ÉÏ»¹ÊÇºÜÃ÷ÁË
-    // ºÃ ÓÚÊÇÄã¾Í·¢ÏÖÕâ¸ö¹æÔò»¹ÊÇ·Ç³£ÇåË¬µÄ ÓÐÔ­ÒòµÄ 
-    // unique ptr ½Ð unique ÊÇÓÐÔ­ÒòµÄ //õ®õ­¹à¶¥ ²»´í²»´í
-    // ÕâÑù¾Í²»ÓÃ¹ÜÀí¹²ÏíµÄÎÊÌâ ²¢ÇÒ¿ÉÒÔ·Ç³£¼òµ¥µÄÐ´ÊÍ·ÅµôËüµÄÂß¼­
+    /*//auto test1 = std::move(text); // std::move æŠŠå‚æ•°çš„ç±»åž‹è½¬æ¢ä¸ºå³å€¼å¼•ç”¨è¿”å›ž
+    //auto test2(std::move(test1)); // è¿™ä¸ªå°±è°ƒç”¨äº†ç§»åŠ¨æž„é€ å‡½æ•°
+    // äºŽæ˜¯è¿™é‡Œå°±è°ƒç”¨äº†ç§»åŠ¨æž„é€ å¤åˆ¶è¿ç®—ç¬¦ //èªæ˜Žå•Šï¼ å¬æ‡‚å·²ç» é‚£å°±æ˜¯æ¯”è¾ƒæ˜Žäº†çš„
+    // é™¤äº† move çš„ä½œç”¨æ¯”è¾ƒå¾®å¦™ è¿˜æœ‰ç§»åŠ¨æž„é€ ä¸ä¼šæ‘§æ¯åŽŸå¯¹è±¡ åŸºæœ¬ä¸Šè¿˜æ˜¯å¾ˆæ˜Žäº†
+    // å¥½ äºŽæ˜¯ä½ å°±å‘çŽ°è¿™ä¸ªè§„åˆ™è¿˜æ˜¯éžå¸¸æ¸…çˆ½çš„ æœ‰åŽŸå› çš„ 
+    // unique ptr å« unique æ˜¯æœ‰åŽŸå› çš„ //é†é†çŒé¡¶ ä¸é”™ä¸é”™
+    // è¿™æ ·å°±ä¸ç”¨ç®¡ç†å…±äº«çš„é—®é¢˜ å¹¶ä¸”å¯ä»¥éžå¸¸ç®€å•çš„å†™é‡Šæ”¾æŽ‰å®ƒçš„é€»è¾‘
     //auto test = text;
-    // make_unique ¾ÍÊÇ¹¹ÔìÒ»¸ö¶ÔÏó È»ºómake_unique²ÎÊý¾ÍÊÇ¹¹Ôìº¯ÊýµÄ²ÎÊý
-    // ÎÒ¿´µ½ sf::Font ÓÐÒ»¸ö¹¹Ôìº¯Êý½ÓÊÜÂ·¾¶
-    // È»ºó·µ»ØÖ¸ÏòÕâ¸ö¶ÔÏóµÄunique_ptr
+    // make_unique å°±æ˜¯æž„é€ ä¸€ä¸ªå¯¹è±¡ ç„¶åŽmake_uniqueå‚æ•°å°±æ˜¯æž„é€ å‡½æ•°çš„å‚æ•°
+    // æˆ‘çœ‹åˆ° sf::Font æœ‰ä¸€ä¸ªæž„é€ å‡½æ•°æŽ¥å—è·¯å¾„
+    // ç„¶åŽè¿”å›žæŒ‡å‘è¿™ä¸ªå¯¹è±¡çš„unique_ptr
 
-    // my_unique_ptr<sf::Font> my_font(std::filesystem::path("SourceHanSerifCN-Medium.otf")); // ÎÒ²Ý²»ÐÐÁËÃ÷ÌìÔÙ¸ã
+    // my_unique_ptr<sf::Font> my_font(std::filesystem::path("SourceHanSerifCN-Medium.otf")); // æˆ‘è‰ä¸è¡Œäº†æ˜Žå¤©å†æž
     // auto my_test = std::move(my_font);
-    // ok ·Ç³£ºÃ
-    // ³É¹¦
-    //Ã»ÊÂÄã¿´
-    // ²¢Ã»ÓÐÎÊÌâ ÒòÎªÃ»·¨¸´ÖÆ£¨£©
-    // Ö»ÊÇÕâ¸ö±¨´íÔõÃ´ÕâÃ´¹îÒì£¨£©
-    //²»ÐÐÁË´óÄÔ¹ýÔØÁË É¶¶¼Ìý²»¶®ÁË Ã»ÊÂ »¹Ê£ÏÂ×¢ÊÍ*/
+    // ok éžå¸¸å¥½
+    // æˆåŠŸ
+    //æ²¡äº‹ä½ çœ‹
+    // å¹¶æ²¡æœ‰é—®é¢˜ å› ä¸ºæ²¡æ³•å¤åˆ¶ï¼ˆï¼‰
+    // åªæ˜¯è¿™ä¸ªæŠ¥é”™æ€Žä¹ˆè¿™ä¹ˆè¯¡å¼‚ï¼ˆï¼‰
+    //ä¸è¡Œäº†å¤§è„‘è¿‡è½½äº† å•¥éƒ½å¬ä¸æ‡‚äº† æ²¡äº‹ è¿˜å‰©ä¸‹æ³¨é‡Š*/
 	text->setFillColor(sf::Color::Black);
 	circle.setFillColor(sf::Color(245,181,210));
 	text->setFont(*font);
@@ -402,7 +402,7 @@ int main()
      // Throws sf::Exception if an error occurs
     // run the program as long as the window is open
     setup_ur_fking_text();
-    start_setting();//ÕâÀïÒª¸Ä³ÉÄÇ¸öfkingµÄ
+    start_setting();//è¿™é‡Œè¦æ”¹æˆé‚£ä¸ªfkingçš„
     state = 0;
     frameclock.restart();
     window.setActive(false);
@@ -426,8 +426,8 @@ int main()
 
         if (state == 0 || state == 2)
         {
-            start_event = window.pollEvent();
-            if (start_event->is<sf::Event::KeyPressed>()/* || start_event->is<sf::Event::KeyReleased>()*/)
+			const auto start_event = window.pollEvent();
+            if (start_event.has_value() && start_event->is<sf::Event::KeyPressed>()/* || start_event->is<sf::Event::KeyReleased>()*/)
             {
                 state = 1;
                 bomb_add();
