@@ -103,16 +103,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>third_party\sfml\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>third_party\sfml\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-audio-d.lib;sfml-graphics-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -124,78 +124,70 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>third_party\sfml\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>sfml-audio.lib;sfml-graphics.lib;sfml-system.lib;sfml-window.lib;sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>third_party\sfml\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include\SFML\Audio.hpp" />
-    <ClInclude Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include\SFML\Config.hpp" />
-    <ClInclude Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include\SFML\GpuPreference.hpp" />
-    <ClInclude Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include\SFML\Graphics.hpp" />
-    <ClInclude Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include\SFML\Main.hpp" />
-    <ClInclude Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include\SFML\Network.hpp" />
-    <ClInclude Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include\SFML\OpenGL.hpp" />
-    <ClInclude Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include\SFML\System.hpp" />
-    <ClInclude Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\include\SFML\Window.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\FLAC.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\FLACd.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\freetype.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\freetyped.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\ogg.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\oggd.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-audio-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-audio-s-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-audio-s.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-audio.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-graphics-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-graphics-s-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-graphics-s.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-graphics.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-main-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-main.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-network-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-network-s-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-network-s.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-network.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-system-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-system-s-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-system-s.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-system.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-window-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-window-s-d.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-window-s.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-window.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\vorbis.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\vorbisd.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\vorbisenc.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\vorbisencd.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\vorbisfile.lib" />
-    <Library Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\vorbisfiled.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-audio-d.pdb" />
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-audio-s-d.pdb" />
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-graphics-d.pdb" />
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-graphics-s-d.pdb" />
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-main-d.pdb" />
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-network-d.pdb" />
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-network-s-d.pdb" />
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-system-d.pdb" />
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-system-s-d.pdb" />
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-window-d.pdb" />
-    <None Include="D:\SFML-3.0.1-windows-vc17-64-bit\SFML-3.0.1\lib\sfml-window-s-d.pdb" />
+    <CopyFileToFolders Include="third_party\sfml\bin\sfml-audio-3.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="third_party\sfml\bin\sfml-audio-d-3.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="third_party\sfml\bin\sfml-graphics-3.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="third_party\sfml\bin\sfml-graphics-d-3.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="third_party\sfml\bin\sfml-network-3.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="third_party\sfml\bin\sfml-network-d-3.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="third_party\sfml\bin\sfml-system-3.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="third_party\sfml\bin\sfml-system-d-3.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="third_party\sfml\bin\sfml-window-3.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="third_party\sfml\bin\sfml-window-d-3.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
