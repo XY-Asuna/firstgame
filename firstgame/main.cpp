@@ -61,12 +61,12 @@ namespace {
         apple_copy = apple;
         circle_copy = circle;
     }
-    void renderingThread(sf::RenderWindow* window)
+    void renderingThread(std::stop_token st, sf::RenderWindow* window)
     {
         // activate the window's context
         window->setActive(true);
         // the rendering loop
-        while (window->isOpen())
+        while (!st.stop_requested())
         {
             frameclock_rend.restart();
             mtx.lock();
@@ -412,16 +412,18 @@ int main()
     state = 0;
     frameclock.restart();
     window.setActive(false);
-    std::thread thread(&renderingThread, &window);
+    std::jthread thread(&renderingThread, &window);
     while (window.isOpen())
     {
         // check all the window's events that were triggered since the last iteration of the loop
         while (const std::optional event = window.pollEvent())
         {
             // "close requested" event: we close the window
-            if (event->is<sf::Event::Closed>())
+            if (event->is<sf::Event::Closed>()) {
+				thread.request_stop();
+                thread.join();
                 window.close();
-
+            }
         }
         if (frametime.asMilliseconds() > frameclock.getElapsedTime().asMilliseconds())
         {
@@ -469,5 +471,5 @@ int main()
         }
         mtx.unlock();
     }
-    thread.join();
+    return 0;
 }
