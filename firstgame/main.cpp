@@ -11,14 +11,14 @@
 #include <stdio.h>
 #include <immintrin.h>
 #include <chrono>
-
+//#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 设置入口地址
 namespace {
     sf::RenderWindow window;
     std::optional<sf::Event> start_event;
     std::mutex mtx, grade_mtx;//lock
     float lac = 1, bomb_speed;
     int totlen, totlen_copy, grade, state, totbomb;
-    sf::CircleShape circle(20.f), snake[100006], apple, bomb[1000];
+    sf::CircleShape circle(20.f), snake[100006], apple, bomb[10000];
     sf::CircleShape circle_copy(20.f), snake_copy[100006], apple_copy;
     sf::Time frametime = sf::microseconds(1000), frametime_rend = sf::microseconds(16667), bomb_time_set = sf::seconds(10);
     sf::Clock frameclock, frameclock_rend, bomb_time;
@@ -257,9 +257,9 @@ namespace {
     {
         std::stringstream temp1;
         if (totlen < 100000)
-            temp1 << "You die! Press any key to restart!\nYour final grade is: " << grade;
+            temp1 << "You die! Press Enter to restart!\nYour final grade is: " << grade;
         else
-            temp1 << "You win! Press any key to restart!\nYour final grade is: " << grade;
+            temp1 << "You win! Press Enter key to restart!\nYour final grade is: " << grade;
         end_text->setString(temp1.str());
         sf::FloatRect rc = end_text->getLocalBounds();
         sf::Vector2f temp;
@@ -348,7 +348,15 @@ namespace {
     {
         bomb[++totbomb].setFillColor(sf::Color::Black);
         sf::Vector2f temp;
-        temp.x = 760.f, temp.y = 560.f;
+        random();
+        int tempmod = rx % 4;
+        switch (tempmod)
+        {
+            case 0: temp.x = 10.f, temp.y = 10.f; break;
+            case 1: temp.x = 10.f, temp.y = 560.f; break;
+            case 2: temp.x = 760.f, temp.y =10.f; break;
+            default: temp.x = 760.f, temp.y = 560.f; break;
+        }
         bomb[totbomb].setPosition(temp);
         bomb[totbomb].setRadius(15.f);
         bomb[totbomb].setFillColor(sf::Color::Black);
@@ -364,7 +372,6 @@ namespace {
         random();
         while (!check_head()) random();
         temp.x = rx, temp.y = ry;
-        //temp.x = 40, temp.y = 40;
         circle.setPosition(temp);
         boundary.setOutlineColor(sf::Color::Black);
         boundary.setOutlineThickness(10.f);
@@ -401,6 +408,7 @@ namespace {
 }
 int main()
 {
+    ShowWindow(GetForegroundWindow(), 0);
     srand(time(0));
     // create the window
     window.create(sf::VideoMode({ 800, 600 }), "My window");
@@ -432,10 +440,19 @@ int main()
         }
         frameclock.restart();
 
-        if (state == 0 || state == 2)
+        if (state == 0)
         {
 			const auto start_event = window.pollEvent();
-            if (start_event.has_value() && start_event->is<sf::Event::KeyPressed>()/* || start_event->is<sf::Event::KeyReleased>()*/)
+            if (start_event.has_value() && start_event->is<sf::Event::KeyPressed>())
+            {
+                state = 1;
+                bomb_add();
+                bomb_time.restart();
+            }
+        }
+        if (state == 2)
+        {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter))
             {
                 state = 1;
                 bomb_add();
