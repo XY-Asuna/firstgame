@@ -1,4 +1,7 @@
-﻿#include <SFML/Graphics.hpp>
+﻿#include "timer_utils.h"
+
+#define WIN32_LEAN_AND_MEAN
+#include <SFML/Graphics.hpp>
 #include <stdlib.h>
 #include <time.h>
 #include <windows.h>
@@ -15,7 +18,7 @@ namespace {
     sf::RenderWindow window;
     std::optional<sf::Event> start_event;
     std::mutex mtx, grade_mtx;//lock
-    float lac = 1, bomb_speed;
+    float lac = 0.12, bomb_speed;
     int totlen, totlen_copy, grade, state, totbomb;
     sf::CircleShape circle(20.f), snake[100006], apple, bomb[10000];
     sf::CircleShape circle_copy(20.f), snake_copy[100006], apple_copy;
@@ -393,8 +396,8 @@ namespace {
             temp_bomb = bomb[i].getPosition(), temp_head = circle.getPosition();
             double dis = getdistance(temp_bomb.x, temp_bomb.y, temp_head.x, temp_head.y);
             double sn = temp_bomb.y - temp_head.y, cs = temp_bomb.x - temp_head.x;
-            temp_bomb.x -= bomb_speed * 0.5 * cs / dis;
-            temp_bomb.y -= bomb_speed * 0.5 * sn / dis;
+            temp_bomb.x -= bomb_speed * 0.05 * cs / dis;
+            temp_bomb.y -= bomb_speed * 0.05 * sn / dis;
             bomb[i].setPosition(temp_bomb);
         }
     }
@@ -431,12 +434,7 @@ int main()
                 window.close();
             }
         }
-        if (frametime.asMilliseconds() > frameclock.getElapsedTime().asMilliseconds())
-        {
-            int sleep_time = frametime.asMicroseconds() - frameclock.getElapsedTime().asMicroseconds();
-            std::this_thread::sleep_for(std::chrono::microseconds(sleep_time));
-        }
-        frameclock.restart();
+		nanosleep(frametime.asMicroseconds() * 1000);
 
         if (state == 0)
         {
@@ -467,7 +465,7 @@ int main()
                 ++grade;
                 grade_to_str();
                 add_apple();
-                for(int i=1;i<=5;i++) 
+                for(int i=1;i<=20;i++) 
                     add();
             }
             bomb_move();

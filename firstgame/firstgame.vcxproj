@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="timer_utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="third_party\sfml\bin\sfml-audio-3.dll">
@@ -186,6 +187,14 @@
     <CopyFileToFolders Include="third_party\sfml\bin\sfml-window-d-3.dll">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </DeploymentContent>
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="timer_utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="SourceHanSerifCN-Medium.otf">
       <FileType>Document</FileType>
     </CopyFileToFolders>
   </ItemGroup>
