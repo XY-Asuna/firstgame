@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include <immintrin.h>
 #include <chrono>
-//#pragma comment( linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"" ) // 设置入口地址
 namespace {
     sf::RenderWindow window;
     std::optional<sf::Event> start_event;
@@ -50,7 +49,7 @@ namespace {
     {
         window.draw(*start_text);
     }
-    void drawing_end()  // corrected the name
+    void drawing_end()
     {
         window.draw(*end_text);
     }
@@ -408,7 +407,6 @@ namespace {
 }
 int main()
 {
-    ShowWindow(GetForegroundWindow(), 0);
     srand(time(0));
     // create the window
     window.create(sf::VideoMode({ 800, 600 }), "My window");
