@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="input_system.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="timer_utils.cpp" />
   </ItemGroup>
@@ -191,6 +192,7 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="input_system.h" />
     <ClInclude Include="timer_utils.h" />
   </ItemGroup>
   <ItemGroup>

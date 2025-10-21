@@ -1,4 +1,5 @@
-﻿#include "timer_utils.h"
+﻿#include "input_system.h"
+#include "timer_utils.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <SFML/Graphics.hpp>
@@ -422,42 +423,108 @@ int main()
     frameclock.restart();
     window.setActive(false);
     std::jthread thread(&renderingThread, &window);
+
+    input_context restart_context{};
+    input_context start_menu_context{};
+	input_context ingame_context{};
+
+    start_menu_context.actions.push_back(input_action{
+        .key = input_keycode::UNKNOWN,
+        .modifiers = input_modifier::NONE,
+        .trigger = input_trigger_type::PRESSED,
+        .callback = []() {
+            if (state == 0) {
+                state = 1;
+                bomb_add();
+                bomb_time.restart();
+            }
+        }
+	});
+    restart_context.actions.push_back(input_action{
+        .key = input_keycode::ENTER,
+        .modifiers = input_modifier::NONE,
+        .trigger = input_trigger_type::PRESSED,
+        .callback = []() {
+            if (state == 2) {
+                state = 1;
+                bomb_add();
+                bomb_time.restart();
+            }
+        }
+    });
+    ingame_context.states.push_back(input_state{
+        .key = input_keycode::W,
+        .modifiers = input_modifier::NONE,
+        .callback = [] (bool pressed) {
+            if (pressed) {
+                std::lock_guard lock(mtx);
+                circle.move({ 0.f, -3.f * lac });
+                moving();
+            }
+        }
+	});
+    ingame_context.states.push_back(input_state{
+        .key = input_keycode::S,
+        .modifiers = input_modifier::NONE,
+        .callback = [] (bool pressed) {
+            if (pressed) {
+                std::lock_guard lock(mtx);
+                circle.move({ 0.f, 3.f * lac });
+                moving();
+            }
+		}
+    });
+    ingame_context.states.push_back(input_state{
+        .key = input_keycode::A,
+        .modifiers = input_modifier::NONE,
+        .callback = [](bool pressed) {
+            if (pressed) {
+                std::lock_guard lock(mtx);
+                circle.move({ -3.f * lac, 0.f });
+                moving();
+            }
+        }
+    });
+	ingame_context.states.push_back(input_state{
+        .key = input_keycode::D,
+        .modifiers = input_modifier::NONE,
+        .callback = [](bool pressed) {
+            if (pressed) {
+				std::lock_guard lock(mtx);
+                circle.move({ 3.f * lac, 0.f });
+                moving();
+            }
+        }
+    });
+    sfml_input_impl sfml_input(window, [&](sf::Event event) {
+        if (event.is<sf::Event::Closed>()) {
+            thread.request_stop();
+            window.close();
+        }
+    });
+    input_impl &input_manager = sfml_input;
+
+    std::array start_contexts{ start_menu_context };
+	std::array restart_contexts{ restart_context };
+	std::array ingame_contexts{ ingame_context };
+
+    input_manager.use_contexts(start_contexts);
+
     while (window.isOpen())
     {
-        // check all the window's events that were triggered since the last iteration of the loop
-        while (const std::optional event = window.pollEvent())
-        {
-            // "close requested" event: we close the window
-            if (event->is<sf::Event::Closed>()) {
-				thread.request_stop();
-                thread.join();
-                window.close();
-            }
-        }
 		nanosleep(frametime.asMicroseconds() * 1000);
-
-        if (state == 0)
-        {
-			const auto start_event = window.pollEvent();
-            if (start_event.has_value() && start_event->is<sf::Event::KeyPressed>())
-            {
-                state = 1;
-                bomb_add();
-                bomb_time.restart();
-            }
+        if (state == 0) {
+            input_manager.use_contexts(start_contexts);
         }
-        if (state == 2)
-        {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter))
-            {
-                state = 1;
-                bomb_add();
-                bomb_time.restart();
-            }
+        else if (state == 2) {
+            input_manager.use_contexts(restart_contexts);
         }
+        else if (state == 1) {
+			input_manager.use_contexts(ingame_contexts);
+        }
+        input_manager.poll_events();
 
         mtx.lock();
-        control();
         if (state == 1)
         {
             if (check_eat())

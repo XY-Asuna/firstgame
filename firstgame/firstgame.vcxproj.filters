@@ -27,6 +27,9 @@
     <ClCompile Include="timer_utils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="input_system.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="third_party\sfml\bin\sfml-window-d-3.dll">
@@ -65,6 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="timer_utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="input_system.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
