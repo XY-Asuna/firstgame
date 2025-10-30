@@ -1,1 +1,2 @@
 /firstgame/third_party/** linguist-vendored
+/firstgame/**/*.h linguist-language=cpp
